@@ -451,9 +451,105 @@
   @media (prefers-reduced-motion: reduce){
     * { transition: none !important; }
   }
-</style>
+
+  /* ===== PASSWORD LOCK SCREEN (clean, matches page theme) ===== */
+  #lockScreen{
+    position:fixed; inset:0; z-index:99999;
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+    background-color:#d8c39a;
+    background-image:
+      radial-gradient(circle at 50% 50%, rgba(255,244,214,0.45), rgba(120,84,40,0.10) 75%),
+      radial-gradient(ellipse at center, transparent 55%, rgba(60,40,15,0.30) 100%),
+      linear-gradient(170deg, #e6d3a8, #cdb07a 55%, #d8c39a 100%);
+    transition: opacity .5s ease;
+  }
+  #lockScreen.fade{ opacity:0; pointer-events:none; }
+  #lockScreen.hidden{ display:none; }
+
+  .lock-card{
+    width:100%; max-width:360px;
+    padding:34px 30px 26px;
+    text-align:center;
+    background:#fbf3e2;
+    border:1px solid rgba(138,90,42,0.35);
+    border-radius:4px;
+    box-shadow: 0 18px 40px rgba(60,40,15,0.28), 0 2px 0 rgba(255,255,255,0.5) inset;
+    font-family: var(--font-body);
+    color:#3a2c1a;
+  }
+  .lock-card.shake{ animation: lockShake .4s; }
+  @keyframes lockShake{
+    0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)}
+    50%{transform:translateX(7px)} 75%{transform:translateX(-4px)}
+  }
+
+  
+  
+  .lock-card h2{
+    font-family: var(--font-display); font-weight:600;
+    font-size:28px; letter-spacing:1px; color:#5a3416;
+    margin:0 0 20px;
+  }
+  
+  
+  .lock-card input{
+    width:100%; padding:12px;
+    font-family: var(--font-body); font-size:18px;
+    letter-spacing:5px; text-align:center;
+    background:#fff9ec; color:#3a2c1a;
+    border:1px solid var(--paper-shadow);
+    border-radius:3px;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .lock-card input::placeholder{ color:rgba(120,90,50,0.35); }
+  .lock-card input:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(201,162,75,0.25);
+  }
+  .lock-card .lock-btn{
+    width:100%; margin-top:12px; padding:12px;
+    background:#5a3f1f; color:#fbf3e2; border:none; border-radius:3px;
+    font-family: var(--font-body); font-size:13px; letter-spacing:3px;
+    cursor:pointer; transition: background .2s;
+  }
+  .lock-card .lock-btn:hover{ background:#7a5a30; }
+  .lock-err{ color:#a13f3f; font-size:13px; margin-top:14px; min-height:18px; }
+  </style>
 </head>
 <body>
+<div id="lockScreen">
+  <div class="lock-card" id="lockBox">
+    <h2>Enter Password</h2>
+    <input type="password" id="lockInput" inputmode="numeric" autocomplete="off" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;">
+    <button class="lock-btn" id="lockBtn">OPEN</button>
+    <div class="lock-err" id="lockErr"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var PASSWORD = '2322007';
+  var screen = document.getElementById('lockScreen');
+  var input = document.getElementById('lockInput');
+  var err = document.getElementById('lockErr');
+  var box = document.getElementById('lockBox');
+
+  function check(){
+    if(input.value.trim() === PASSWORD){
+      screen.classList.add('fade');
+      setTimeout(function(){ screen.classList.add('hidden'); }, 500);
+    } else {
+      err.textContent = 'Wrong password, please try again.';
+      input.value = '';
+      box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake');
+    }
+  }
+  document.getElementById('lockBtn').addEventListener('click', check);
+  input.addEventListener('keydown', function(e){ if(e.key === 'Enter') check(); });
+  input.focus();
+})();
+</script>
+
 
 <header>
   <div class="eyebrow">A little something for you</div>
