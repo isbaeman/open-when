@@ -530,7 +530,20 @@ const cards = [
 
 /* ============================================================ */
 
-let unlocked = JSON.parse(sessionStorage.getItem('openwhen_unlocked') || '[]');
+let unlocked = [];
+try {
+  unlocked = JSON.parse(sessionStorage.getItem('openwhen_unlocked') || '[]');
+} catch (e) {
+  unlocked = [];
+}
+
+function saveUnlocked(){
+  try {
+    sessionStorage.setItem('openwhen_unlocked', JSON.stringify(unlocked));
+  } catch (e) {
+    /* storage blocked: unlocks just won't persist after refresh */
+  }
+}
 
 function saveUnlocked(){
   sessionStorage.setItem('openwhen_unlocked', JSON.stringify(unlocked));
