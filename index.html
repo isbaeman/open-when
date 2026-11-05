@@ -368,57 +368,6 @@
     line-height:1;
   }
 
-  .question-box p.q{
-    font-size: 17px;
-    line-height: 1.7;
-    margin-bottom: 16px;
-  }
-  .question-box input{
-    width:100%;
-    padding: 11px 12px;
-    font-family: var(--font-body);
-    font-size: 14px;
-    border: 1px solid var(--paper-shadow);
-    border-radius: 2px;
-    background: #fff9ec;
-    color:#3a2c1a;
-    margin-bottom: 12px;
-  }
-  .question-box input:focus{ outline: 2px solid var(--rose); outline-offset:1px; }
-  .question-box button{
-    background: #5a3f1f;
-    color: #fbf3e2;
-    border:none;
-    padding: 10px 20px;
-    font-family: var(--font-body);
-    font-size: 13px;
-    letter-spacing: 1px;
-    border-radius: 2px;
-    cursor:pointer;
-    transition: background .2s;
-  }
-  .question-box button:hover{ background:#7a5a30; }
-  .hint-btn{
-    background:none !important;
-    color:#8a7a5a !important;
-    padding: 6px 0 !important;
-    text-decoration: underline;
-    font-size:12px !important;
-  }
-  .wrong-msg{
-    color: #a13f3f;
-    font-size: 13px;
-    margin: -6px 0 12px;
-    min-height: 16px;
-  }
-  .hint-text{
-    font-size: 12px;
-    color: #7a6a4a;
-    font-style: italic;
-    margin: -6px 0 12px;
-    min-height: 14px;
-  }
-
   .message-box p{
     font-size: 17px;
     line-height: 1.9;
@@ -451,6 +400,40 @@
   @media (prefers-reduced-motion: reduce){
     * { transition: none !important; }
   }
+
+  /* ---- new: mood picker (only added classes, nothing above changed) ---- */
+  .mood-q{ font-size: 17px; line-height: 1.7; margin: 0 0 18px; text-align: center; }
+  .moods{ display:flex; justify-content:space-between; gap:6px; }
+  .mood{ flex:1; background:#fff9ec; border:1px solid var(--paper-shadow); border-radius:10px; padding:10px 2px 8px; cursor:pointer; font-family:var(--font-body); color:#5a3f1f; transition: transform .15s ease, background .15s ease; }
+  .mood:hover, .mood:focus-visible{ transform: translateY(-4px) scale(1.06); background:#fdecc4; outline:none; }
+  .mood .em{ display:block; font-size:30px; line-height:1.2; }
+  .mood .lb{ display:block; font-size:10px; margin-top:4px; letter-spacing:.3px; }
+  .big-em{ font-size:34px; text-align:center; margin-bottom:6px; }
+  .back-btn{ background:none; border:none; color:#8a7a5a; text-decoration:underline; font-family:var(--font-body); font-size:13px; cursor:pointer; margin-top:20px; padding:6px 0; }
+  .mood .em svg{ width:38px; height:38px; display:block; margin:0 auto; }
+  .big-em svg{ width:54px; height:54px; display:block; margin:0 auto; }
+  .mood{ padding:14px 2px 10px; }
+  .mood .lb{ font-size:12px; }
+  @media (max-width: 480px){ .mood .em svg{ width:32px; height:32px; } }
+
+  /* ---- new: password gate (same paper-letter theme) ---- */
+  #lockOverlay{ z-index:100; transition: opacity .4s ease; }
+  #lockOverlay .letter{ text-align:center; }
+  #lockOverlay .lock-sub{ font-size:16px; line-height:1.7; margin:0 0 18px; color:#5a4426; }
+  #lockOverlay .wax-seal{ width:44px; height:44px; font-size:18px; }
+  .lock-input{
+    width:100%; padding:12px; font-family:var(--font-body); font-size:18px; letter-spacing:6px; text-align:center;
+    border:1px solid var(--paper-shadow); border-radius:2px; background:#fff9ec; color:#3a2c1a; margin-bottom:10px;
+  }
+  .lock-input:focus{ outline:2px solid var(--rose); outline-offset:1px; }
+  .lock-btn{
+    background:#5a3f1f; color:#fbf3e2; border:none; padding:10px 26px; font-family:var(--font-body);
+    font-size:13px; letter-spacing:1px; border-radius:2px; cursor:pointer; transition:background .2s;
+  }
+  .lock-btn:hover{ background:#7a5a30; }
+  .lock-msg{ color:#a13f3f; font-size:13px; min-height:18px; margin:0 0 10px; }
+  .shake{ animation: shake .4s ease; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)} }
 </style>
 </head>
 <body>
@@ -459,12 +442,23 @@
   <div class="eyebrow">A little something for you</div>
   <h1>Open When...</h1>
   <div class="flourish"><span>&#10052;</span></div>
-  <p>Har jar ek mauqa hai. Click karo, mera sawal ka jawab do, aur note nikal ao jayega. Kuch tumhein pata hoga, kuch shayad nahi &mdash; par sab dil se likha hai.</p>
+  <p>Har jar ek mauqa hai. Click karo, apna mood chuno, aur us mood ka note nikal aayega. Kuch tumhein pata hoga, kuch shayad nahi &mdash; par sab dil se likha hai.</p>
 </header>
 
 <div class="box" id="box"></div>
 
 <footer>banaya gaya thoda time aur bohat saara pyaar se &hearts;</footer>
+
+<div class="modal-overlay show" id="lockOverlay">
+  <div class="letter">
+    <div class="wax-seal">&hearts;</div>
+    <h2>Pehle password batao</h2>
+    <p class="lock-sub">Ye jars sirf tumhare liye hain. Password likho aur andar aao.</p>
+    <input class="lock-input" id="lockInput" type="password" inputmode="numeric" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="off">
+    <div class="lock-msg" id="lockMsg"></div>
+    <button class="lock-btn" id="lockBtn" type="button">Unlock</button>
+  </div>
+</div>
 
 <div class="modal-overlay" id="overlay">
   <div class="letter" id="letterCard">
@@ -475,174 +469,170 @@
 
 <script>
 /* ============================================================
-   EDIT YOUR CARDS HERE — ye woh jagah hai jahan tum sab customize karoge.
-   Har card mein:
-     title    -> envelope pe likha hua ("Open when you're sad")
-     question -> personal trivia sawal
-     answers  -> array of acceptable correct answers (lowercase, no spaces needed — hum khud normalize karte hain)
-     hint     -> optional chhota sa hint
-     message  -> jab unlock ho jaye to jo letter dikhega
+   EDIT YOUR CARDS HERE
+   moods   -> 3 emoji levels: Low, Moderate, Extreme (sab jars mein same)
+   title   -> jar ke tag pe likha hua
+   letters -> 3 letters, moods ke order mein:
+              [0] low, [1] moderate, [2] extreme
    ============================================================ */
+const moods = [
+  { e: `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M28 6A18 18 0 1 0 42 32 14 14 0 0 1 28 6z" fill="#e6c877" stroke="#5a3f1f" stroke-width="2" stroke-linejoin="round"/><path d="M38 6l1.5 3.5L43 11l-3.5 1.5L38 16l-1.5-3.5L33 11l3.5-1.5z" fill="#5a3f1f"/></svg>`, l: "Low" },
+  { e: `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4c5 6 8 10 8 14a8 8 0 0 1-16 0c0-4 3-8 8-14z" fill="#e6c877" stroke="#5a3f1f" stroke-width="2" stroke-linejoin="round"/><path d="M24 20v7" stroke="#5a3f1f" stroke-width="2" stroke-linecap="round"/><rect x="16" y="27" width="16" height="16" rx="2" fill="#fbf3e2" stroke="#5a3f1f" stroke-width="2"/><path d="M12 43h24" stroke="#5a3f1f" stroke-width="2" stroke-linecap="round"/></svg>`, l: "Moderate" },
+  { e: `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 41S6 30 6 18a9 9 0 0 1 18-2 9 9 0 0 1 18 2c0 12-18 23-18 23z" fill="#c96a6a" stroke="#5a3f1f" stroke-width="2" stroke-linejoin="round"/><path d="M14 16a5 5 0 0 1 5-4" stroke="#fbf3e2" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M39 4l1.3 3.2L43.5 8.5l-3.2 1.3L39 13l-1.3-3.2L34.5 8.5l3.2-1.3z" fill="#e6c877" stroke="#5a3f1f" stroke-width="1"/></svg>`, l: "Extreme" }
+];
+
 const cards = [
   {
     title: "Open when you miss me",
-    question: "Hamari pehli mulaqat kahan hui thi?",
-    answers: ["university", "college", "school"],
-    hint: "Woh jagah jahan hum dono padhte the...",
-    message: "Jab bhi tum ye padh rahe ho, iska matlab tum mujhe miss kar rahe ho — aur main bhi. Yaad hai woh pehla din? Us waqt mujhe nahi pata tha ke ye itna khaas ban jayega.\n\nBas itna jaan lo: main bhi utna hi soch raha/rahi hoon jitna tum abhi soch rahe ho."
+    letters: [
+      "Pata hai tum abhi bohot udaas ho, aur mujhe bhi tumhari bohot yaad aa rahi hai. Doori sirf ek waqti cheez hai.\n\nAankhein band karo aur socho ke main tumhare saath hoon. Bohot jald milenge, promise.",
+      "Thora sa khush ho aur thori si meri yaad bhi — ye combination mujhe pasand hai.\n\nMain bhi tumhe yaad kar ke muskura raha/rahi hoon. Jaldi baat karte hain.",
+      "Itne khush ho? Ab to mujhe bhi tumhare saath hona chahiye tha!\n\nTumhari khushi mere liye sab kuch hai. Jab milenge na, saari yaadein ek saath celebrate karenge."
+    ]
   },
   {
-    title: "Open when you're sad",
-    question: "Wo kaunsi cheez hai jo mujhe hamesha hansati hai jab main udaas hota/hoti hoon?",
-    answers: ["your jokes", "memes", "food"],
-    hint: "Socho, jab main down hota/hoti hoon to tum kya karte ho...",
-    message: "Sab theek ho jayega. Tum akele nahi ho — main hamesha ek call/text door hoon.\n\nDeep breath lo. Ye waqt bhi guzar jayega, aur main tumhare saath hoon isse guzarne ke liye."
+    title: "Open when you’re sad",
+    letters: [
+      "Mujhe pata hai aaj sab bohot bhaari lag raha hai. Rona hai to ro lo, isme koi sharam nahi.\n\nMain yahin hoon, ek call ya text door. Tum akele nahi ho, aur ye waqt guzar jayega.",
+      "Thori si muskurahat bhi kaafi hoti hai. Dekho, tum already behtar ho rahe ho.\n\nIs chhoti si khushi ko pakad ke rakho, baqi sab theek ho jayega.",
+      "Wah! Udaas ho ke bhi itne khush? Lagta hai kuch acha ho gaya!\n\nMujhe bhi batao kya hua, main bhi tumhari khushi mein shamil hona chahta/chahti hoon."
+    ]
   },
   {
     title: "Open on a bad day",
-    question: "Meri favourite comfort food kya hai?",
-    answers: ["biryani"],
-    hint: "Kuch masaledar aur sab ka pasandeeda...",
-    message: "Aaj ka din chahe jaisa bhi ho, kal naya din hai. Tum bohat kuch handle kar chuke ho — ye bhi kar loge.\n\nApna khayal rakho, kuch acha khao, aur mujhe yaad rakho — main proud hoon tum pe."
+    letters: [
+      "Aaj ka din bohot bura tha, mujhe pata hai. Tum thak gaye ho aur sab kuch zyada lag raha hai.\n\nBas ek lambi saans lo. Kal naya din hai, aur tum is se bhi bade din guzaar chuke ho.",
+      "Bura din tha, par thori si roshni nazar aayi, aur ye achi baat hai.\n\nIs chhoti si khushi ko yaad rakhna. Main proud hoon ke tum himmat nahi haarte.",
+      "Itna bura din aur itni khushi? Lagta hai tum ne din ko hara diya!\n\nTumhari ye energy kamaal hai. Aaj raat ek treat to banti hai!"
+    ]
   },
   {
     title: "Open when you need a smile",
-    question: "Humari sabse funny yaadgar moment kaunsi thi?",
-    answers: ["road trip", "picnic", "movie night"],
-    hint: "Woh din jab hum dono bohat hanse the...",
-    message: "Muskurao! Zindagi mein tumhare jaisa banda/bandi milna meri khushqismati hai.\n\nAaj kuch achi cheez hogi, dekhna."
+    letters: [
+      "Pata hai muskurana mushkil lag raha hai. Koi baat nahi, aaj zabardasti muskurane ki zaroorat nahi.\n\nBas itna jaan lo ke tumhari ek muskurahat mere liye poori duniya hai. Jab dil chahe tab hasna.",
+      "Thori si khushi already hai, bas isse aur barha lo. Apna favourite gana lagao aur do minute ke liye jhoom lo.\n\nMuskurao, mujhe pata hai tum kar sakte ho.",
+      "Itni khushi! Mujhe to lagta hai ye letter ki zaroorat hi nahi thi.\n\nPhir bhi, haste raho, chamakte raho, aur apni khushi mujh se zaroor share karna!"
+    ]
   },
   {
-    title: "Open when you're angry at me",
-    question: "Mera sabse bura habit kya hai?",
-    answers: ["late", "forgetful", "stubborn"],
-    hint: "Kuch aisa jo tum hamesha kehte ho...",
-    message: "Main jaanta/janti hoon ki maine tum ko upset kiya hai. Maafi chahta/chahti hoon. Tum mere liye kitne khaas ho, aur main nahi chahta/chahti ke ye baat kharab ho.\n\nBaat karte hain, theek ho jayega. Hamesha hota hai."
+    title: "Open when you’re angry at me",
+    letters: [
+      "Tum bohot hurt ho aur udaas bhi, ye main samajh sakta/sakti hoon. Mujhe dil se afsos hai.\n\nMain tumhein kabhi dukh nahi dena chahta/chahti tha. Jab tayyar ho, baat kar lena, main sunne ke liye hoon.",
+      "Gussa thora kam hua hai na? Ye achi alamat hai.\n\nMain apni galti maanta/maanti hoon. Chalo thanday dimaag se baat karte hain, theek ho jayega.",
+      "Itne khush ho ke gussa bhool hi gaye? Ye to mera favourite outcome hai!\n\nSorry, aur thank you ke tum mujhe maaf kar dete ho. Chalo, ab ek hug banta hai!"
+    ]
   },
   {
     title: "Open when you succeed",
-    question: "Mera sabse bada dream kya tha jo tum jaante ho?",
-    answers: ["graduation", "travel", "job", "career"],
-    hint: "Kuch jo hum dono ne plan kiya tha...",
-    message: "Tu kar gaya/gayi! Main itna proud hoon! Tere kaabil the tum hamesha — bas mujhe pata tha.\n\nYe toh bas shuruwat hai. Aage aur badi cheezein hogi. Aur main tumhare saath hoon har kadam par! 🎉"
+    letters: [
+      "Kamyabi mili hai par dil udaas hai? Kabhi kabhi badi jeet ke baad bhi thakan hoti hai, aur ye bilkul normal hai.\n\nMain proud hoon, chahe tum khud ko appreciate na karo. Tum ne sach mein kamaal kiya hai.",
+      "Thori si khushi aur bohot saari mehnat ka natija — tum ne ye kamaye hai!\n\nKhud ko bhi thora credit do. Main tumhare saath hoon har kadam par.",
+      "TUM NE KAR DIYA! 🎉 Mujhe pata tha, mujhe hamesha pata tha!\n\nAaj to celebration banta hai. Jahan bhi ho, mera pyaar aur hazaaron mubarakbaad qubool karo. Main tum pe bohot fakhar karta/karti hoon!"
+    ]
   }
 ];
-
 /* ============================================================ */
 
-let unlocked = [];
-try {
-  unlocked = JSON.parse(sessionStorage.getItem('openwhen_unlocked') || '[]');
-} catch (e) {
-  unlocked = [];
-}
-
-function saveUnlocked(){
-  try {
-    sessionStorage.setItem('openwhen_unlocked', JSON.stringify(unlocked));
-  } catch (e) {
-    /* storage blocked: unlocks just won't persist after refresh */
-  }
-}
-
-function saveUnlocked(){
-  sessionStorage.setItem('openwhen_unlocked', JSON.stringify(unlocked));
-}
-
-function normalize(str){
-  return str.trim().toLowerCase().replace(/\s+/g,' ');
+let opened = [];
+try { opened = JSON.parse(sessionStorage.getItem('openwhen_opened') || '[]'); } catch (e) { opened = []; }
+function saveOpened(){
+  try { sessionStorage.setItem('openwhen_opened', JSON.stringify(opened)); } catch (e) {}
 }
 
 function renderBox(){
   const box = document.getElementById('box');
   box.innerHTML = '';
   cards.forEach((card, i) => {
-    const isUnlocked = unlocked.includes(i);
+    const done = opened.includes(i);
     const env = document.createElement('div');
     env.className = 'envelope';
     env.innerHTML = `
       <div class="envelope-inner">
         <div class="jar-glow"></div>
-        <div class="env-body ${isUnlocked ? 'opened unlocked' : ''}">
+        <div class="env-body ${done ? 'opened unlocked' : ''}">
           <div class="jar-fireflies"><span></span><span></span><span></span></div>
         </div>
         <div class="jar-string"></div>
-        <div class="jar-tag ${isUnlocked ? 'unlocked' : ''}">
+        <div class="jar-tag ${done ? 'unlocked' : ''}">
           ${card.title}
-          ${isUnlocked ? '<span class="env-checkmark">read ✓</span>' : ''}
+          ${done ? '<span class="env-checkmark">read ✓</span>' : ''}
         </div>
-      </div>
-    `;
+      </div>`;
     env.addEventListener('click', () => openCard(i));
     box.appendChild(env);
   });
 }
 
-function openCard(i){
+function showMoods(i){
   const card = cards[i];
-  const overlay = document.getElementById('overlay');
   const content = document.getElementById('letterContent');
-  const isUnlocked = unlocked.includes(i);
-
-  if(isUnlocked){
-    content.innerHTML = `
-      <div class="wax-seal">&hearts;</div>
-      <h2>${card.title}</h2>
-      <div class="message-box">
-        <p>${card.message}</p>
-      </div>
-    `;
-  } else {
-    content.innerHTML = `
-      <h2>${card.title}</h2>
-      <div class="question-box">
-        <p class="q">${card.question}</p>
-        <input type="text" id="answerInput" placeholder="Apna jawab likho..." autocomplete="off">
-        <div class="wrong-msg" id="wrongMsg"></div>
-        <div class="hint-text" id="hintText"></div>
-        <button id="submitBtn">Unlock</button>
-        <button class="hint-btn" id="hintBtn" type="button">Hint chahiye?</button>
-      </div>
-    `;
-    const input = document.getElementById('answerInput');
-    const submitBtn = document.getElementById('submitBtn');
-    const hintBtn = document.getElementById('hintBtn');
-    const wrongMsg = document.getElementById('wrongMsg');
-    const hintText = document.getElementById('hintText');
-
-    const tryUnlock = () => {
-      const val = normalize(input.value);
-      const correct = card.answers.some(a => normalize(a) === val || val.includes(normalize(a)));
-      if(correct){
-        unlocked.push(i);
-        saveUnlocked();
-        openCard(i); // re-render as unlocked
-        renderBox();
-      } else {
-        wrongMsg.textContent = 'Hmm, ye sahi jawab nahi hai — dobara socho!';
-      }
-    };
-
-    submitBtn.addEventListener('click', tryUnlock);
-    input.addEventListener('keydown', e => { if(e.key === 'Enter') tryUnlock(); });
-    hintBtn.addEventListener('click', () => { hintText.textContent = card.hint || 'Koi hint nahi hai iske liye — dil se socho!'; });
-  }
-
-  overlay.classList.add('show');
+  content.innerHTML = `
+    <h2>${card.title}</h2>
+    <p class="mood-q">Abhi tum kitne khush ho? Apna mood chuno</p>
+    <div class="moods">
+      ${moods.map((m, k) => `<button class="mood" data-k="${k}" type="button"><span class="em">${m.e}</span><span class="lb">${m.l}</span></button>`).join('')}
+    </div>`;
+  content.querySelectorAll('.mood').forEach(b => b.addEventListener('click', () => showLetter(i, +b.dataset.k)));
 }
 
-document.getElementById('closeBtn').addEventListener('click', () => {
-  document.getElementById('overlay').classList.remove('show');
-});
-document.getElementById('overlay').addEventListener('click', (e) => {
-  if(e.target.id === 'overlay') document.getElementById('overlay').classList.remove('show');
-});
-document.addEventListener('keydown', e => {
-  if(e.key === 'Escape') document.getElementById('overlay').classList.remove('show');
-});
+function showLetter(i, k){
+  const card = cards[i];
+  const content = document.getElementById('letterContent');
+  content.innerHTML = `
+    <div class="wax-seal">&hearts;</div>
+    <h2>${card.title}</h2>
+    <div class="big-em">${moods[k].e}</div>
+    <div class="message-box"><p>${card.letters[k]}</p></div>
+    <div style="text-align:center"><button class="back-btn" id="backBtn" type="button">Doosra mood chuno</button></div>`;
+  document.getElementById('backBtn').addEventListener('click', () => showMoods(i));
+  if(!opened.includes(i)){
+    opened.push(i);
+    saveOpened();
+    renderBox();
+  }
+}
+
+function openCard(i){
+  showMoods(i);
+  document.getElementById('overlay').classList.add('show');
+}
+
+const overlay = document.getElementById('overlay');
+document.getElementById('closeBtn').addEventListener('click', () => overlay.classList.remove('show'));
+overlay.addEventListener('click', e => { if(e.target === overlay) overlay.classList.remove('show'); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') overlay.classList.remove('show'); });
+
+/* ---- password gate ---- */
+const PASSWORD = "2322007";
+const lockOverlay = document.getElementById('lockOverlay');
+const lockInput = document.getElementById('lockInput');
+const lockMsg = document.getElementById('lockMsg');
+
+function hideLock(){
+  lockOverlay.style.opacity = '0';
+  lockOverlay.style.pointerEvents = 'none';
+  setTimeout(() => { lockOverlay.style.display = 'none'; }, 420);
+}
+let alreadyIn = false;
+try { alreadyIn = sessionStorage.getItem('openwhen_in') === '1'; } catch (e) {}
+if(alreadyIn){ lockOverlay.style.display = 'none'; }
+else { setTimeout(() => lockInput.focus(), 50); }
+
+function tryLock(){
+  if(lockInput.value.trim() === PASSWORD){
+    try { sessionStorage.setItem('openwhen_in', '1'); } catch (e) {}
+    hideLock();
+  } else {
+    lockMsg.textContent = 'Galat password — dobara koshish karo!';
+    const card = lockOverlay.querySelector('.letter');
+    card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+    lockInput.select();
+  }
+}
+document.getElementById('lockBtn').addEventListener('click', tryLock);
+lockInput.addEventListener('keydown', e => { if(e.key === 'Enter') tryLock(); });
 
 renderBox();
 </script>
-
 </body>
 </html>
