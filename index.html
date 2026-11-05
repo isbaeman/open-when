@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -442,235 +442,6 @@
     z-index:1;
   }
 
-
-  /* ---- Password gate ---- */
-  .lock-screen{
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background:
-      radial-gradient(circle at 50% 40%, rgba(255,244,214,0.35), rgba(120,84,40,0.25) 80%),
-      linear-gradient(170deg, #e6d3a8, #c9ac74 55%, #d8c39a 100%);
-    transition: opacity .4s ease, visibility .4s ease;
-  }
-  .lock-screen.hide{ opacity: 0; visibility: hidden; pointer-events: none; }
-  .lock-card{
-    position: relative;
-    isolation: isolate;
-    max-width: 380px;
-    width: 100%;
-    padding: 38px 30px 30px;
-    text-align: center;
-    border-radius: 6px;
-    box-shadow: 0 25px 40px rgba(60,40,15,0.35);
-    color: #3a2c1a;
-  }
-  .lock-card::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    z-index:-1;
-    border-radius: 6px;
-    background: linear-gradient(160deg, #fbf3e2, #ecdfbc 60%, #fbf3e2);
-  }
-  .lock-card .lock-icon{ font-size: 34px; margin-bottom: 6px; }
-  .lock-card h2{
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 24px;
-    margin: 0 0 8px;
-    color: #5a3f1f;
-  }
-  .lock-card p{ font-size: 14px; line-height: 1.6; margin: 0 0 18px; color: rgba(74,58,34,0.8); }
-  .lock-card input{
-    width: 100%;
-    padding: 11px 12px;
-    font-family: var(--font-body);
-    font-size: 16px;
-    letter-spacing: 3px;
-    text-align: center;
-    border: 1px solid var(--paper-shadow);
-    border-radius: 2px;
-    background: #fff9ec;
-    color: #3a2c1a;
-    margin-bottom: 10px;
-  }
-  .lock-card input:focus{ outline: 2px solid var(--rose); outline-offset: 1px; }
-  .lock-card button{
-    background: #5a3f1f;
-    color: #fbf3e2;
-    border: none;
-    padding: 10px 26px;
-    font-family: var(--font-body);
-    font-size: 13px;
-    letter-spacing: 1px;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: background .2s;
-  }
-  .lock-card button:hover{ background: #7a5a30; }
-  .lock-error{ color: #a13f3f; font-size: 13px; min-height: 18px; margin-bottom: 10px; }
-  .lock-card.shake{ animation: shake .35s; }
-  @keyframes shake{
-    0%,100%{ transform: translateX(0); }
-    25%{ transform: translateX(-8px); }
-    75%{ transform: translateX(8px); }
-  }
-
-
-  /* ================= ANIMATIONS ================= */
-  header .eyebrow{ animation: fadeDown .8s ease both; }
-  header h1{ animation: fadeDown .9s .15s ease both; }
-  header .flourish{ animation: fadeDown .9s .3s ease both; }
-  header p{ animation: fadeDown .9s .45s ease both; }
-  .flourish span{ display:inline-block; animation: spinSlow 8s linear infinite; }
-  footer{ animation: fadeUp 1s 1.4s ease both; }
-  @keyframes fadeDown{ from{ opacity:0; transform: translateY(-18px); } to{ opacity:1; transform:none; } }
-  @keyframes fadeUp{ from{ opacity:0; transform: translateY(18px); } to{ opacity:1; transform:none; } }
-  @keyframes spinSlow{ to{ transform: rotate(360deg); } }
-
-  /* jars rise in one by one, then float gently */
-  .envelope{ animation: jarIn .8s cubic-bezier(.2,.9,.3,1.2) backwards; }
-  .envelope:nth-child(1){ animation-delay: .5s; }
-  .envelope:nth-child(2){ animation-delay: .65s; }
-  .envelope:nth-child(3){ animation-delay: .8s; }
-  .envelope:nth-child(4){ animation-delay: .95s; }
-  .envelope:nth-child(5){ animation-delay: 1.1s; }
-  .envelope:nth-child(6){ animation-delay: 1.25s; }
-  @keyframes jarIn{ from{ opacity:0; transform: translateY(60px) scale(.8); } to{ opacity:1; transform:none; } }
-
-  .envelope-inner{ animation: bob 4.5s ease-in-out infinite; }
-  .envelope:nth-child(2n) .envelope-inner{ animation-duration: 5.2s; animation-delay: -1.2s; }
-  .envelope:nth-child(3n) .envelope-inner{ animation-duration: 4s; animation-delay: -2.4s; }
-  @keyframes bob{ 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-7px); } }
-
-  /* lid wiggles when hovering a closed jar */
-  .envelope:hover .env-body:not(.opened)::before{ animation: lidWiggle .6s ease; }
-  @keyframes lidWiggle{
-    0%,100%{ transform: translateX(-50%) rotate(0deg); }
-    25%{ transform: translateX(-50%) translateY(-4px) rotate(-5deg); }
-    50%{ transform: translateX(-50%) translateY(-2px) rotate(4deg); }
-    75%{ transform: translateX(-50%) translateY(-3px) rotate(-2deg); }
-  }
-
-  /* tag swings on its twine */
-  .jar-tag{ transform-origin: 50% -28px; animation: tagSwing 3.6s ease-in-out infinite; }
-  .envelope:nth-child(2n) .jar-tag{ animation-delay: -1s; }
-  .envelope:nth-child(3n) .jar-tag{ animation-delay: -2s; }
-  @keyframes tagSwing{ 0%,100%{ transform: rotate(1deg); } 50%{ transform: rotate(7deg); } }
-
-  /* unlocked jars glow */
-  .env-body.unlocked{ animation: unlockedGlow 2.8s ease-in-out infinite; }
-  @keyframes unlockedGlow{
-    0%,100%{ filter: drop-shadow(0 10px 14px rgba(50,32,10,0.25)) drop-shadow(0 0 4px rgba(230,200,119,0.4)); }
-    50%{ filter: drop-shadow(0 10px 14px rgba(50,32,10,0.25)) drop-shadow(0 0 14px rgba(230,200,119,0.95)); }
-  }
-
-  /* letter content animates in each time it opens */
-  .letter h2{ animation: fadeUp .6s .15s ease both; }
-  .question-box p.q{ animation: fadeUp .6s .3s ease both; }
-  .question-box input, .question-box button{ animation: fadeUp .6s .45s ease both; }
-  .message-box p{ animation: fadeUp 1s .55s ease both; }
-  .letter .wax-seal{ animation: sealPop .7s .1s cubic-bezier(.2,1.6,.4,1) both, heartbeat 1.8s 1s ease-in-out infinite; }
-  @keyframes sealPop{ from{ transform: scale(0) rotate(-120deg); opacity:0; } to{ transform: scale(1) rotate(0); opacity:1; } }
-  @keyframes heartbeat{ 0%,100%{ transform: scale(1); } 15%{ transform: scale(1.18); } 30%{ transform: scale(1); } 45%{ transform: scale(1.12); } }
-  .wrong-msg.pop{ animation: shakeX .4s; }
-  @keyframes shakeX{ 0%,100%{ transform: translateX(0); } 25%{ transform: translateX(-6px); } 75%{ transform: translateX(6px); } }
-
-  /* lock screen */
-  .lock-card{ animation: fadeUp .9s ease both; }
-  .lock-card .lock-icon{ display:inline-block; animation: lockSway 2.6s ease-in-out infinite; transform-origin: top center; }
-  @keyframes lockSway{ 0%,100%{ transform: rotate(-8deg); } 50%{ transform: rotate(8deg); } }
-
-  .heart-float svg{ width:100%; height:100%; display:block; }
-  .inline-heart svg{ vertical-align: -2px; color:#c96a6a; }
-  .letter .wax-seal svg{ width: 14px; height: 14px; }
-  .env-checkmark svg{ vertical-align: -1px; }
-  .lock-card .lock-icon svg{ display:block; margin: 0 auto; }
-
-
-  /* animated light running around the password box */
-  @property --a{ syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-  .lock-card::before{
-    content:"";
-    position:absolute;
-    inset:-3px;
-    z-index:-2;
-    border-radius: 9px;
-    background:
-      conic-gradient(from var(--a), rgba(138,90,42,0.35) 0deg, rgba(138,90,42,0.35) 200deg, #e6c877 280deg, #fff3c4 320deg, #c96a6a 345deg, rgba(138,90,42,0.35) 360deg);
-    animation: ringSpin 3.5s linear infinite;
-  }
-  @keyframes ringSpin{ to{ --a: 360deg; } }
-
-  /* golden specks drifting up inside the password box */
-  .lock-dots{
-    position:absolute;
-    inset:0;
-    overflow:hidden;
-    border-radius: 6px;
-    pointer-events:none;
-    z-index:0;
-  }
-  .lock-card > :not(.lock-dots){ position: relative; z-index: 1; }
-  .lock-dots span{
-    position:absolute;
-    bottom:-8px;
-    width:5px; height:5px;
-    border-radius:50%;
-    background:#e6c877;
-    box-shadow:0 0 8px 2px rgba(230,200,119,0.8);
-    animation: dotRise 5s ease-in infinite;
-  }
-  .lock-dots span:nth-child(1){ left:10%; animation-delay:0s; }
-  .lock-dots span:nth-child(2){ left:24%; animation-delay:1.6s; animation-duration:6s; }
-  .lock-dots span:nth-child(3){ left:38%; animation-delay:3.1s; }
-  .lock-dots span:nth-child(4){ left:52%; animation-delay:.8s; animation-duration:5.5s; }
-  .lock-dots span:nth-child(5){ left:66%; animation-delay:2.4s; }
-  .lock-dots span:nth-child(6){ left:80%; animation-delay:4s; animation-duration:6.5s; }
-  .lock-dots span:nth-child(7){ left:90%; animation-delay:1.2s; }
-  @keyframes dotRise{
-    0%{ transform: translate(0,0) scale(.6); opacity:0; }
-    15%{ opacity:.9; }
-    50%{ transform: translate(8px,-170px) scale(1); }
-    100%{ transform: translate(-6px,-340px) scale(.5); opacity:0; }
-  }
-
-  /* symbols burst on unlock */
-  .heart-float{
-    position: fixed;
-    bottom: -30px;
-    z-index: 70;
-    pointer-events: none;
-    animation: heartUp linear forwards;
-  }
-  @keyframes heartUp{
-    0%{ transform: translateY(0) translateX(0) scale(.6); opacity: 0; }
-    10%{ opacity: 1; }
-    100%{ transform: translateY(-110vh) translateX(var(--drift)) scale(1.2); opacity: 0; }
-  }
-
-  /* drifting dust sparkles in the background */
-  .sparkle{
-    position: fixed;
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: rgba(255,230,160,0.9);
-    box-shadow: 0 0 8px 2px rgba(255,214,120,0.7);
-    pointer-events: none;
-    z-index: 0;
-    animation: sparkleDrift linear infinite;
-  }
-  @keyframes sparkleDrift{
-    0%{ transform: translateY(0) translateX(0); opacity: 0; }
-    20%{ opacity: .9; }
-    100%{ transform: translateY(-40vh) translateX(30px); opacity: 0; }
-  }
-
   @media (max-width: 480px){
     .box{ grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); gap: 30px 18px; }
     .envelope{ height: 195px; }
@@ -678,33 +449,22 @@
   }
 
   @media (prefers-reduced-motion: reduce){
-    * { transition: none !important; animation: none !important; }
+    * { transition: none !important; }
   }
 </style>
 </head>
 <body>
 
-<div class="lock-screen" id="lockScreen">
-  <div class="lock-card" id="lockCard">
-    <div class="lock-dots"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-    <h2>Enter Password</h2>
-    <p>These jars are only for you. Enter the password to step inside.</p>
-    <input type="password" id="pwInput" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="off" inputmode="numeric">
-    <div class="lock-error" id="lockError"></div>
-    <button id="pwBtn" type="button">Open</button>
-  </div>
-</div>
-
 <header>
   <div class="eyebrow">A little something for you</div>
   <h1>Open When...</h1>
-  <div class="flourish"><span><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0z"/></svg></span></div>
-  <p>Every jar is a moment. Click one, answer my question, and the note will slip out. Some you'll know, some maybe not &mdash; but every word is from the heart.</p>
+  <div class="flourish"><span>&#10052;</span></div>
+  <p>Har jar ek mauqa hai. Click karo, mera sawal ka jawab do, aur note nikal ao jayega. Kuch tumhein pata hoga, kuch shayad nahi &mdash; par sab dil se likha hai.</p>
 </header>
 
 <div class="box" id="box"></div>
 
-<footer>made with a little time and a whole lot of love <span class="inline-heart"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9C.8 8.5 2.5 4 6.5 4c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3 4 0 5.7 4.5 4 8-2.5 4.5-9.5 9-9.5 9z"/></svg></span></footer>
+<footer>banaya gaya thoda time aur bohat saara pyaar se &hearts;</footer>
 
 <div class="modal-overlay" id="overlay">
   <div class="letter" id="letterCard">
@@ -714,84 +474,57 @@
 </div>
 
 <script>
-/* ---- Password gate ---- */
-const PASSWORD = "2322007";
-const lockScreen = document.getElementById('lockScreen');
-if(sessionStorage.getItem('openwhen_auth') === 'yes'){
-  lockScreen.classList.add('hide');
-}
-function checkPassword(){
-  const input = document.getElementById('pwInput');
-  const err = document.getElementById('lockError');
-  const card = document.getElementById('lockCard');
-  if(input.value.trim() === PASSWORD){
-    sessionStorage.setItem('openwhen_auth', 'yes');
-    lockScreen.classList.add('hide');
-  } else {
-    err.textContent = 'Wrong password — try again!';
-    card.classList.remove('shake');
-    void card.offsetWidth;
-    card.classList.add('shake');
-    input.value = '';
-    input.focus();
-  }
-}
-document.getElementById('pwBtn').addEventListener('click', checkPassword);
-document.getElementById('pwInput').addEventListener('keydown', e => { if(e.key === 'Enter') checkPassword(); });
-</script>
-
-<script>
 /* ============================================================
-   EDIT YOUR CARDS HERE — this is where you customize everything.
-   Each card has:
-     title    -> text on the jar tag ("Open when you're sad")
-     question -> a personal trivia question
-     answers  -> array of accepted answers (case and extra spaces are ignored)
-     hint     -> optional little hint
-     message  -> the letter shown once unlocked
+   EDIT YOUR CARDS HERE — ye woh jagah hai jahan tum sab customize karoge.
+   Har card mein:
+     title    -> envelope pe likha hua ("Open when you're sad")
+     question -> personal trivia sawal
+     answers  -> array of acceptable correct answers (lowercase, no spaces needed — hum khud normalize karte hain)
+     hint     -> optional chhota sa hint
+     message  -> jab unlock ho jaye to jo letter dikhega
    ============================================================ */
 const cards = [
   {
     title: "Open when you miss me",
-    question: "Where did we first meet?",
+    question: "Hamari pehli mulaqat kahan hui thi?",
     answers: ["university", "college", "school"],
-    hint: "The place where we both studied...",
-    message: "If you're reading this, it means you're missing me — and I'm missing you too. Remember that very first day? Back then I had no idea it would become something this special.\n\nJust know this: I'm thinking about you as much as you're thinking about me right now."
+    hint: "Woh jagah jahan hum dono padhte the...",
+    message: "Jab bhi tum ye padh rahe ho, iska matlab tum mujhe miss kar rahe ho — aur main bhi. Yaad hai woh pehla din? Us waqt mujhe nahi pata tha ke ye itna khaas ban jayega.\n\nBas itna jaan lo: main bhi utna hi soch raha/rahi hoon jitna tum abhi soch rahe ho."
   },
   {
     title: "Open when you're sad",
-    question: "What's the one thing that always makes me laugh when I'm feeling low?",
+    question: "Wo kaunsi cheez hai jo mujhe hamesha hansati hai jab main udaas hota/hoti hoon?",
     answers: ["your jokes", "memes", "food"],
-    hint: "Think about what you do when I'm down...",
-    message: "Everything will be okay. You're not alone — I'm always just a call or a text away.\n\nTake a deep breath. This time will pass too, and I'm right here with you to get through it."
+    hint: "Socho, jab main down hota/hoti hoon to tum kya karte ho...",
+    message: "Sab theek ho jayega. Tum akele nahi ho — main hamesha ek call/text door hoon.\n\nDeep breath lo. Ye waqt bhi guzar jayega, aur main tumhare saath hoon isse guzarne ke liye."
   },
   {
     title: "Open on a bad day",
-    question: "What's my favourite comfort food?",
+    question: "Meri favourite comfort food kya hai?",
     answers: ["biryani"],
-    hint: "Something spicy that everyone loves...",
-    message: "However today has gone, tomorrow is a brand new day. You've handled so much already — you'll get through this too.\n\nTake care of yourself, eat something good, and remember me — I'm proud of you."
+    hint: "Kuch masaledar aur sab ka pasandeeda...",
+    message: "Aaj ka din chahe jaisa bhi ho, kal naya din hai. Tum bohat kuch handle kar chuke ho — ye bhi kar loge.\n\nApna khayal rakho, kuch acha khao, aur mujhe yaad rakho — main proud hoon tum pe."
   },
   {
     title: "Open when you need a smile",
-    question: "What was our funniest memory together?",
+    question: "Humari sabse funny yaadgar moment kaunsi thi?",
     answers: ["road trip", "picnic", "movie night"],
-    hint: "The day we both laughed so hard...",
-    message: "Smile! I'm so lucky to have someone like you in my life.\n\nSomething good is going to happen today — just watch."
+    hint: "Woh din jab hum dono bohat hanse the...",
+    message: "Muskurao! Zindagi mein tumhare jaisa banda/bandi milna meri khushqismati hai.\n\nAaj kuch achi cheez hogi, dekhna."
   },
   {
     title: "Open when you're angry at me",
-    question: "What's my worst habit?",
+    question: "Mera sabse bura habit kya hai?",
     answers: ["late", "forgetful", "stubborn"],
-    hint: "Something you're always telling me...",
-    message: "I know I've upset you, and I'm sorry. You mean so much to me, and I don't want this to spoil things.\n\nLet's talk it out — it'll be okay. It always is."
+    hint: "Kuch aisa jo tum hamesha kehte ho...",
+    message: "Main jaanta/janti hoon ki maine tum ko upset kiya hai. Maafi chahta/chahti hoon. Tum mere liye kitne khaas ho, aur main nahi chahta/chahti ke ye baat kharab ho.\n\nBaat karte hain, theek ho jayega. Hamesha hota hai."
   },
   {
     title: "Open when you succeed",
-    question: "What was my biggest dream that you know about?",
+    question: "Mera sabse bada dream kya tha jo tum jaante ho?",
     answers: ["graduation", "travel", "job", "career"],
-    hint: "Something we planned together...",
-    message: "You did it! I'm so proud of you! You've always deserved this — I just knew it.\n\nThis is only the beginning. Even bigger things are coming, and I'll be with you every step of the way!"
+    hint: "Kuch jo hum dono ne plan kiya tha...",
+    message: "Tu kar gaya/gayi! Main itna proud hoon! Tere kaabil the tum hamesha — bas mujhe pata tha.\n\nYe toh bas shuruwat hai. Aage aur badi cheezein hogi. Aur main tumhare saath hoon har kadam par! 🎉"
   }
 ];
 
@@ -805,43 +538,6 @@ function saveUnlocked(){
 
 function normalize(str){
   return str.trim().toLowerCase().replace(/\s+/g,' ');
-}
-
-function burstHearts(){
-  const shapes = [
-    '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9.5-9C.8 8.5 2.5 4 6.5 4c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3 4 0 5.7 4.5 4 8-2.5 4.5-9.5 9-9.5 9z"/></svg>',
-    '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0z"/></svg>',
-    '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L22 12L12 22L2 12z"/></svg>',
-    '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5l3 6.9 7.5.7-5.7 5 1.7 7.4L12 17.5 5.5 21.5l1.7-7.4-5.7-5 7.5-.7z"/></svg>'
-  ];
-  const colors = ['#c96a6a','#e6c877','#e08a8a','#d1a94f'];
-  for(let k = 0; k < 28; k++){
-    const h = document.createElement('div');
-    h.className = 'heart-float';
-    h.innerHTML = shapes[k % shapes.length];
-    const size = 14 + Math.random() * 20;
-    h.style.width = size + 'px';
-    h.style.height = size + 'px';
-    h.style.left = (Math.random() * 100) + 'vw';
-    h.style.color = colors[k % colors.length];
-    h.style.setProperty('--drift', ((Math.random() - 0.5) * 120) + 'px');
-    h.style.animationDuration = (2.6 + Math.random() * 2.2) + 's';
-    h.style.animationDelay = (Math.random() * 0.6) + 's';
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 6000);
-  }
-}
-
-function makeSparkles(){
-  for(let k = 0; k < 14; k++){
-    const sp = document.createElement('div');
-    sp.className = 'sparkle';
-    sp.style.left = (Math.random() * 100) + 'vw';
-    sp.style.top = (45 + Math.random() * 55) + 'vh';
-    sp.style.animationDuration = (6 + Math.random() * 6) + 's';
-    sp.style.animationDelay = (-Math.random() * 8) + 's';
-    document.body.appendChild(sp);
-  }
 }
 
 function renderBox(){
@@ -860,7 +556,7 @@ function renderBox(){
         <div class="jar-string"></div>
         <div class="jar-tag ${isUnlocked ? 'unlocked' : ''}">
           ${card.title}
-          ${isUnlocked ? '<span class="env-checkmark">read <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg></span>' : ''}
+          ${isUnlocked ? '<span class="env-checkmark">read ✓</span>' : ''}
         </div>
       </div>
     `;
@@ -877,7 +573,7 @@ function openCard(i){
 
   if(isUnlocked){
     content.innerHTML = `
-      <div class="wax-seal"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9C.8 8.5 2.5 4 6.5 4c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3 4 0 5.7 4.5 4 8-2.5 4.5-9.5 9-9.5 9z"/></svg></div>
+      <div class="wax-seal">&hearts;</div>
       <h2>${card.title}</h2>
       <div class="message-box">
         <p>${card.message}</p>
@@ -888,11 +584,11 @@ function openCard(i){
       <h2>${card.title}</h2>
       <div class="question-box">
         <p class="q">${card.question}</p>
-        <input type="text" id="answerInput" placeholder="Write your answer..." autocomplete="off">
+        <input type="text" id="answerInput" placeholder="Apna jawab likho..." autocomplete="off">
         <div class="wrong-msg" id="wrongMsg"></div>
         <div class="hint-text" id="hintText"></div>
         <button id="submitBtn">Unlock</button>
-        <button class="hint-btn" id="hintBtn" type="button">Need a hint?</button>
+        <button class="hint-btn" id="hintBtn" type="button">Hint chahiye?</button>
       </div>
     `;
     const input = document.getElementById('answerInput');
@@ -909,16 +605,14 @@ function openCard(i){
         saveUnlocked();
         openCard(i); // re-render as unlocked
         renderBox();
-        burstHearts();
       } else {
-        wrongMsg.textContent = 'Hmm, that\'s not the right answer — think again!';
-        wrongMsg.classList.remove('pop'); void wrongMsg.offsetWidth; wrongMsg.classList.add('pop');
+        wrongMsg.textContent = 'Hmm, ye sahi jawab nahi hai — dobara socho!';
       }
     };
 
     submitBtn.addEventListener('click', tryUnlock);
     input.addEventListener('keydown', e => { if(e.key === 'Enter') tryUnlock(); });
-    hintBtn.addEventListener('click', () => { hintText.textContent = card.hint || 'No hint for this one — think with your heart!'; });
+    hintBtn.addEventListener('click', () => { hintText.textContent = card.hint || 'Koi hint nahi hai iske liye — dil se socho!'; });
   }
 
   overlay.classList.add('show');
@@ -935,7 +629,6 @@ document.addEventListener('keydown', e => {
 });
 
 renderBox();
-makeSparkles();
 </script>
 
 </body>
