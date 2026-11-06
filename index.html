@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Open When...</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IM+Fell+English:ital@0;1&family=Special+Elite&display=swap');
+
   :root{
     --ink: #f3e9d2;
     --paper: #fbf3e2;
@@ -19,8 +21,6 @@
     --font-body: 'IM Fell English', 'Special Elite', Georgia, serif;
   }
 
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IM+Fell+English:ital@0;1&family=Special+Elite&display=swap');
-
   * { box-sizing: border-box; }
 
   body{
@@ -28,16 +28,13 @@
     min-height:100vh;
     background-color: #d8c39a;
     background-image:
-      /* stains */
       radial-gradient(circle at 8% 15%, rgba(120,84,40,0.20), transparent 22%),
       radial-gradient(circle at 92% 12%, rgba(120,84,40,0.16), transparent 20%),
       radial-gradient(circle at 15% 88%, rgba(120,84,40,0.18), transparent 24%),
       radial-gradient(circle at 85% 92%, rgba(120,84,40,0.14), transparent 22%),
       radial-gradient(circle at 50% 50%, rgba(255,244,214,0.35), rgba(120,84,40,0.12) 75%),
-      /* fold creases */
       linear-gradient(90deg, transparent 49.7%, rgba(90,60,20,0.10) 50%, transparent 50.3%),
       linear-gradient(0deg, transparent 49.7%, rgba(90,60,20,0.08) 50%, transparent 50.3%),
-      /* paper fiber */
       repeating-linear-gradient(45deg, rgba(90,60,20,0.025) 0px, rgba(90,60,20,0.025) 1px, transparent 1px, transparent 3px),
       linear-gradient(170deg, #e6d3a8, #c9ac74 55%, #d8c39a 100%);
     color: #4a3a22;
@@ -47,7 +44,6 @@
     overflow-x: hidden;
   }
 
-  /* aged edge vignette + speckles */
   body::before{
     content:"";
     position: fixed;
@@ -135,7 +131,6 @@
     height: 100%;
   }
 
-  /* warm glow pooling behind/under the jar */
   .jar-glow{
     position: absolute;
     left: 50%;
@@ -153,7 +148,6 @@
     50% { opacity: 0.9; transform: translateX(-50%) scale(1.04); }
   }
 
-  /* ---- Jar body: rigid, wide-mouth, slightly conical container ---- */
   .env-body{
     position: absolute;
     left: 50%;
@@ -182,7 +176,6 @@
     filter: drop-shadow(0 15px 20px rgba(50,32,10,0.3));
   }
 
-  /* fireflies floating inside the jar */
   .jar-fireflies{
     position: absolute;
     inset: 0;
@@ -209,7 +202,6 @@
     100% { transform: translateY(-70px) translateX(-3px); opacity: 0; }
   }
 
-  /* ---- Wooden lid: EXTRA BOLD AND THICK ---- */
   .env-body::before{
     content:"";
     position:absolute;
@@ -225,7 +217,7 @@
       linear-gradient(180deg, #e8c979 0%, #d4a860 20%, #b98a52 40%, #9a6f3f 60%, #7a5228 80%, #5a3f1f 100%);
     border-radius: 70% 70% 12px 12px;
     border: 5px solid rgba(30,15,5,0.95);
-    box-shadow: 
+    box-shadow:
       0 12px 18px rgba(0,0,0,0.6),
       0 6px 12px rgba(0,0,0,0.4),
       inset 0 4px 8px rgba(255,240,200,0.45),
@@ -239,7 +231,6 @@
   }
   .env-body::after{ content: none; }
 
-  /* ---- Twine + hanging tag ---- */
   .jar-string{
     position: absolute;
     top: -2px;
@@ -296,7 +287,6 @@
     border-color: var(--gold-bright);
   }
 
-  /* Modal */
   .modal-overlay{
     position: fixed;
     inset:0;
@@ -401,7 +391,7 @@
     * { transition: none !important; }
   }
 
-  /* ---- new: mood picker (only added classes, nothing above changed) ---- */
+  /* ---- mood picker ---- */
   .mood-q{ font-size: 17px; line-height: 1.7; margin: 0 0 18px; text-align: center; }
   .moods{ display:flex; justify-content:space-between; gap:6px; }
   .mood{ flex:1; background:#fff9ec; border:1px solid var(--paper-shadow); border-radius:10px; padding:10px 2px 8px; cursor:pointer; font-family:var(--font-body); color:#5a3f1f; transition: transform .15s ease, background .15s ease; }
@@ -416,7 +406,7 @@
   .mood .lb{ font-size:12px; }
   @media (max-width: 480px){ .mood .em svg{ width:32px; height:32px; } }
 
-  /* ---- new: password gate (same paper-letter theme) ---- */
+  /* ---- password gate ---- */
   #lockOverlay{ z-index:100; transition: opacity .4s ease; }
   #lockOverlay .letter{ text-align:center; }
   #lockOverlay .lock-sub{ font-size:16px; line-height:1.7; margin:0 0 18px; color:#5a4426; }
@@ -469,11 +459,7 @@
 
 <script>
 /* ============================================================
-   EDIT YOUR CARDS HERE
-   moods   -> 3 emoji levels: Low, Moderate, Extreme (sab jars mein same)
-   title   -> jar ke tag pe likha hua
-   letters -> 3 letters, moods ke order mein:
-              [0] low, [1] moderate, [2] extreme
+   MOODS (sab jars mein same)
    ============================================================ */
 const moods = [
   { e: `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M28 6A18 18 0 1 0 42 32 14 14 0 0 1 28 6z" fill="#e6c877" stroke="#5a3f1f" stroke-width="2" stroke-linejoin="round"/><path d="M38 6l1.5 3.5L43 11l-3.5 1.5L38 16l-1.5-3.5L33 11l3.5-1.5z" fill="#5a3f1f"/></svg>`, l: "Low" },
@@ -481,55 +467,133 @@ const moods = [
   { e: `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 41S6 30 6 18a9 9 0 0 1 18-2 9 9 0 0 1 18 2c0 12-18 23-18 23z" fill="#c96a6a" stroke="#5a3f1f" stroke-width="2" stroke-linejoin="round"/><path d="M14 16a5 5 0 0 1 5-4" stroke="#fbf3e2" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M39 4l1.3 3.2L43.5 8.5l-3.2 1.3L39 13l-1.3-3.2L34.5 8.5l3.2-1.3z" fill="#e6c877" stroke="#5a3f1f" stroke-width="1"/></svg>`, l: "Extreme" }
 ];
 
+/* ============================================================
+   LETTERS - har jar ki apni array
+   Order hamesha: [0] Low, [1] Moderate, [2] Extreme
+   Letter badalna ho to sirf us jar ki array mein edit karo.
+   Enter dabao to new line ban jati hai (backticks ke andar).
+   Backtick ( ` ) character letter ke andar mat likhna.
+   ============================================================ */
+
+// ---- Jar 1: Open when you miss me ----
+const missMe = [
+  // Low
+  `Wahhh shampyyy... low level kia hota hai 😭😭😭 Wahh shampyyy wahh... baby doll, is you not love me? 😭😭😭😭😭😭😭😭 Is may kuch nhi kahon gi... jao ja kr moderate wala perho 😗😗😗
+
+Kitny buray ho... itna to may normal time may bhi nhi krti 😭😭 Am your one and only gf... thora ziyada yaad kia kro 😗😗😗😗💗`,
+
+  // Moderate
+  `Ahannn... toh ab apko meri yaad aa rahi haiii? 😗😗😗 Koi nhiii... abhi nhiii... kisi na kisi din jab sab theek ho jayega na... tab ap bhi inhi dino ko miss kro gy jin dino apko meri yaad aati thi 👻💗 Ap bhi socho gy... hayeee kia achy din thy woh 😈😈😈 qky tab toh main apki jaan hi nhi chorun gi 😂❤️ Har waqt tang karun gi... har waqt apko tng krun gi... or aik min ky liay bhi jan nhi chorun gi... or saray kam ap sa krwaon gi 👻👻👻👻
+
+Koi nhiii... koi nhiii... abhi miss kro... baad mein aur zyada miss kro gy 😁😈💕 Hehehe...
+
+Chaloo... agr yay perhlo to isky bad “Tere Pass Main” sun lyna 😗😗 qky may bhi esy hi krtii 👻💗`,
+
+  // Extreme
+  `😗😗😗😗😗 Ahannnn... toh aapko bhi meri yaad aati hai? 👻😈 Cuz I thought main hi akeli hoon jo aapko aik minute mein hazaar baar sochti rehti hoon... 😭😗 Aapko pata hai... jab bhi kabhi aise bethi hoti hoon ya koi kaam kar rahi hoti hoon... toh pata nahi kyun bas purani baatein yaad karne lag jaati hoon... 😭🖤 Shayad jo aap abhi feel kar rahe hain... woh main har waqt feel karti hoon... 👻👻👻👻 Aur aksar toh aankhein bhar aati hain... 😭😗 Especially raat ko ya jab kabhi bemaar hoti hoon... 😱 Cuz you're the only one who understands me in a way no one else does... 🖤 Ab khud hi bataiye... mujhe kitna feel hota hoga? (RN main literally rone wali ho rahi hoon... 😗😭👻) Khairrrrr... don't worry... main aapki jaan itni jaldi nahi chorne wali... 😈😁🖤 Aur agar kabhi meri bohat yaad aaye na... toh bas Alfaz ya Chalo Door Kahin sun lena... 👻😗 Main hamesha yehi sunti hoon jab aapki yaad extreme level par aati hai... yani practically har waqt... 😭👻😈🖤`
+];
+
+// ---- Jar 2: Open when you're sad ----
+const sad = [
+  // Low
+  `Aaj ka din bohot bura tha, mujhe pata hai. Tum thak gaye ho aur sab kuch zyada lag raha hai.
+
+Bas ek lambi saans lo. Kal naya din hai, aur tum is se bhi bade din guzaar chuke ho.`,
+
+  // Moderate
+  `Udaas ho, par thori si roshni nazar aayi, aur ye achi baat hai.
+
+Is chhoti si khushi ko yaad rakhna. Main proud hoon ke tum himmat nahi haarte.`,
+
+  // Extreme
+  `Itni udaasi ke baad itni khushi? Lagta hai tum ne din ko hara diya!
+
+Tumhari ye energy kamaal hai. Aaj raat ek treat to banti hai!`
+];
+
+// ---- Jar 3: Open when you need a smile ----
+const needSmile = [
+  // Low
+  `Pata hai muskurana mushkil lag raha hai. Koi baat nahi, aaj zabardasti muskurane ki zaroorat nahi.
+
+Bas itna jaan lo ke tumhari ek muskurahat mere liye poori duniya hai. Jab dil chahe tab hasna.`,
+
+  // Moderate
+  `Thori si khushi already hai, bas isse aur barha lo. Apna favourite gana lagao aur do minute ke liye jhoom lo.
+
+Muskurao, mujhe pata hai tum kar sakte ho.`,
+
+  // Extreme
+  `Itni khushi! Mujhe to lagta hai ye letter ki zaroorat hi nahi thi.
+
+Phir bhi, haste raho, chamakte raho, aur apni khushi mujh se zaroor share karna!`
+];
+
+// ---- Jar 4: Open on a bad day ----
+const badDay = [
+  // Low
+  `Aaj ka din bohot bura tha, mujhe pata hai. Tum thak gaye ho aur sab kuch zyada lag raha hai.
+
+Bas ek lambi saans lo. Kal naya din hai, aur tum is se bhi bade din guzaar chuke ho.`,
+
+  // Moderate
+  `Bura din tha, par thori si roshni nazar aayi, aur ye achi baat hai.
+
+Is chhoti si khushi ko yaad rakhna. Main proud hoon ke tum himmat nahi haarte.`,
+
+  // Extreme
+  `Itna bura din aur itni khushi? Lagta hai tum ne din ko hara diya!
+
+Tumhari ye energy kamaal hai. Aaj raat ek treat to banti hai!`
+];
+
+// ---- Jar 5: Open when you're angry at me ----
+const angryAtMe = [
+  // Low
+  `Tum bohot hurt ho aur udaas bhi, ye main samajh sakta/sakti hoon. Mujhe dil se afsos hai.
+
+Main tumhein kabhi dukh nahi dena chahta/chahti tha. Jab tayyar ho, baat kar lena, main sunne ke liye hoon.`,
+
+  // Moderate
+  `Gussa thora kam hua hai na? Ye achi alamat hai.
+
+Main apni galti maanta/maanti hoon. Chalo thanday dimaag se baat karte hain, theek ho jayega.`,
+
+  // Extreme
+  `Itne khush ho ke gussa bhool hi gaye? Ye to mera favourite outcome hai!
+
+Sorry, aur thank you ke tum mujhe maaf kar dete ho. Chalo, ab ek hug banta hai!`
+];
+
+// ---- Jar 6: Open when you succeed ----
+const succeed = [
+  // Low
+  `Kamyabi mili hai par dil udaas hai? Kabhi kabhi badi jeet ke baad bhi thakan hoti hai, aur ye bilkul normal hai.
+
+Main proud hoon, chahe tum khud ko appreciate na karo. Tum ne sach mein kamaal kiya hai.`,
+
+  // Moderate
+  `Thori si khushi aur bohot saari mehnat ka natija — tum ne ye kamaye hai!
+
+Khud ko bhi thora credit do. Main tumhare saath hoon har kadam par.`,
+
+  // Extreme
+  `TUM NE KAR DIYA! 🎉 Mujhe pata tha, mujhe hamesha pata tha!
+
+Aaj to celebration banta hai. Jahan bhi ho, mera pyaar aur hazaaron mubarakbaad qubool karo. Main tum pe bohot fakhar karta/karti hoon!`
+];
+
+/* ============================================================
+   JARS - jis order mein yahan likhoge, usi order mein dikhenge
+   Naya jar: upar nayi array banao, phir yahan ek line add karo.
+   ============================================================ */
 const cards = [
-{
-  title: "Open when you miss me",
-  letters: [
-    "Wahhh shampyyy... low level kia hota hai 😭😭😭 Wahh shampyyy wahh... baby doll, is you not love me? 😭😭😭😭😭😭😭😭 Is may kuch nhi kahon gi... jao ja kr moderate wala perho 😗😗😗\n\nKitny buray ho... itna to may normal time may bhi nhi krti 😭😭 Am your one and only gf... thora ziyada yaad kia kro 😗😗😗😗💗",
-    "Thora sa khush ho aur thori si meri yaad bhi — ye combination mujhe pasand hai.\n\nMain bhi tumhe yaad kar ke muskura raha/rahi hoon. Jaldi baat karte hain.",
-    "Ahannn... toh ab apko meri yaad aa rahi haiii? 😗😗😗 Koi nhiii... abhi nhiii... kisi na kisi din jab sab theek ho jayega na... tab ap bhi inhi dino ko miss kro gy jin dino apko meri yaad aati thi 👻💗 Ap bhi socho gy... hayeee kia achy din thy woh 😈😈😈 qky tab toh main apki jaan hi nhi chorun gi 😂❤️ Har waqt tang karun gi... har waqt apko tng krun gi... or aik min ky liay bhi jan nhi chorun gi... or saray kam ap sa krwaon gi 👻👻👻👻\n\nKoi nhiii... koi nhiii... abhi miss kro... baad mein aur zyada miss kro gy 😁😈💕 Hehehe...\n\nChaloo... agr yay perhlo to isky bad “Tere Pass Main” sun lyna 😗😗 qky may bhi esy hi krtii 👻💗"
-  ]
-},
-  {
-    title: "Open when you miss me",
-    letters: [
-      "Ahannn... toh ab apko meri yaad aa rahi haiii? 😗😗😗 Koi nhiii... abhi nhiii... kisi na kisi din jab sab theek ho jayega na... tab ap bhi inhi dino ko miss kro gy jin dino apko meri yaad aati thi 👻💗 Ap bhi socho gy... hayeee kia achy din thy woh 😈😈😈 qky tab toh main apki jaan hi nhi chorun gi 😂❤️ Har waqt tang karun gi... har waqt apko tng krun gi... or aik min ky liay bhi jan nhi chorun gi... or saray kam ap sa krwaon gi 👻👻👻👻\n\nKoi nhiii... koi nhiii... abhi miss kro... baad mein aur zyada miss kro gy 😁😈💕 Hehehe...\n\nChaloo... agr yay perhlo to isky bad “Tere Pass Main” sun lyna 😗😗 qky may bhi esy hi krtii 👻💗",
-      "Thora sa khush ho aur thori si meri yaad bhi — ye combination mujhe pasand hai.\n\nMain bhi tumhe yaad kar ke muskura raha/rahi hoon. Jaldi baat karte hain.",
-      "Itne khush ho? Ab to mujhe bhi tumhare saath hona chahiye tha!\n\nTumhari khushi mere liye sab kuch hai. Jab milenge na, saari yaadein ek saath celebrate karenge."
-    ]
-  },
-  {
-    title: "Open on a bad day",
-    letters: [
-      "Aaj ka din bohot bura tha, mujhe pata hai. Tum thak gaye ho aur sab kuch zyada lag raha hai.\n\nBas ek lambi saans lo. Kal naya din hai, aur tum is se bhi bade din guzaar chuke ho.",
-      "Bura din tha, par thori si roshni nazar aayi, aur ye achi baat hai.\n\nIs chhoti si khushi ko yaad rakhna. Main proud hoon ke tum himmat nahi haarte.",
-      "Itna bura din aur itni khushi? Lagta hai tum ne din ko hara diya!\n\nTumhari ye energy kamaal hai. Aaj raat ek treat to banti hai!"
-    ]
-  },
-  {
-    title: "Open when you need a smile",
-    letters: [
-      "Pata hai muskurana mushkil lag raha hai. Koi baat nahi, aaj zabardasti muskurane ki zaroorat nahi.\n\nBas itna jaan lo ke tumhari ek muskurahat mere liye poori duniya hai. Jab dil chahe tab hasna.",
-      "Thori si khushi already hai, bas isse aur barha lo. Apna favourite gana lagao aur do minute ke liye jhoom lo.\n\nMuskurao, mujhe pata hai tum kar sakte ho.",
-      "Itni khushi! Mujhe to lagta hai ye letter ki zaroorat hi nahi thi.\n\nPhir bhi, haste raho, chamakte raho, aur apni khushi mujh se zaroor share karna!"
-    ]
-  },
-  {
-    title: "Open when you’re angry at me",
-    letters: [
-      "Tum bohot hurt ho aur udaas bhi, ye main samajh sakta/sakti hoon. Mujhe dil se afsos hai.\n\nMain tumhein kabhi dukh nahi dena chahta/chahti tha. Jab tayyar ho, baat kar lena, main sunne ke liye hoon.",
-      "Gussa thora kam hua hai na? Ye achi alamat hai.\n\nMain apni galti maanta/maanti hoon. Chalo thanday dimaag se baat karte hain, theek ho jayega.",
-      "Itne khush ho ke gussa bhool hi gaye? Ye to mera favourite outcome hai!\n\nSorry, aur thank you ke tum mujhe maaf kar dete ho. Chalo, ab ek hug banta hai!"
-    ]
-  },
-  {
-    title: "Open when you succeed",
-    letters: [
-      "Kamyabi mili hai par dil udaas hai? Kabhi kabhi badi jeet ke baad bhi thakan hoti hai, aur ye bilkul normal hai.\n\nMain proud hoon, chahe tum khud ko appreciate na karo. Tum ne sach mein kamaal kiya hai.",
-      "Thori si khushi aur bohot saari mehnat ka natija — tum ne ye kamaye hai!\n\nKhud ko bhi thora credit do. Main tumhare saath hoon har kadam par.",
-      "TUM NE KAR DIYA! 🎉 Mujhe pata tha, mujhe hamesha pata tha!\n\nAaj to celebration banta hai. Jahan bhi ho, mera pyaar aur hazaaron mubarakbaad qubool karo. Main tum pe bohot fakhar karta/karti hoon!"
-    ]
-  }
+  { title: "Open when you miss me",         letters: missMe },      // 1
+  { title: "Open when you’re sad",          letters: sad },         // 2
+  { title: "Open when you need a smile",    letters: needSmile },   // 3
+  { title: "Open on a bad day",             letters: badDay },      // 4
+  { title: "Open when you’re angry at me",  letters: angryAtMe },   // 5
+  { title: "Open when you succeed",         letters: succeed }      // 6
 ];
 /* ============================================================ */
 
