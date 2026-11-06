@@ -356,12 +356,15 @@
     cursor:pointer;
     color: #7a6a4a;
     line-height:1;
+    z-index: 5;
   }
 
   .message-box p{
     font-size: 17px;
     line-height: 1.9;
     white-space: pre-wrap;
+    margin: 0 0 12px;
+    word-break: break-word;
   }
   .message-box .signoff{
     margin-top: 18px;
@@ -371,6 +374,25 @@
     text-align: right;
     color:#5a3f1f;
   }
+
+  /* ---- lamba letter scroll ---- */
+  #letterCard{
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+  }
+  #letterContent{
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: #b98a52 transparent;
+  }
+  #letterContent::-webkit-scrollbar{ width: 6px; }
+  #letterContent::-webkit-scrollbar-thumb{ background: #b98a52; border-radius: 3px; }
+  #letterContent::-webkit-scrollbar-track{ background: transparent; }
 
   footer{
     text-align:center;
@@ -385,6 +407,7 @@
     .box{ grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); gap: 30px 18px; }
     .envelope{ height: 195px; }
     .jar-tag{ font-size: 11px; width: 74px; padding: 5px 7px 6px; }
+    .letter{ padding: 36px 22px 28px; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -408,7 +431,7 @@
 
   /* ---- password gate ---- */
   #lockOverlay{ z-index:100; transition: opacity .4s ease; }
-  #lockOverlay .letter{ text-align:center; }
+  #lockOverlay .letter{ text-align:center; max-height:none; display:block; }
   #lockOverlay .lock-sub{ font-size:16px; line-height:1.7; margin:0 0 18px; color:#5a4426; }
   #lockOverlay .wax-seal{ width:44px; height:44px; font-size:18px; }
   .lock-input{
@@ -473,6 +496,7 @@ const moods = [
    Letter badalna ho to sirf us jar ki array mein edit karo.
    Enter dabao to new line ban jati hai (backticks ke andar).
    Backtick ( ` ) character letter ke andar mat likhna.
+   Letter kitna bhi lamba ho, ab scroll ho kar perha ja sakta hai.
    ============================================================ */
 
 // ---- Jar 1: Open when you miss me ----
@@ -636,6 +660,7 @@ function showMoods(i){
     <div class="moods">
       ${moods.map((m, k) => `<button class="mood" data-k="${k}" type="button"><span class="em">${m.e}</span><span class="lb">${m.l}</span></button>`).join('')}
     </div>`;
+  content.scrollTop = 0;
   content.querySelectorAll('.mood').forEach(b => b.addEventListener('click', () => showLetter(i, +b.dataset.k)));
 }
 
@@ -648,6 +673,7 @@ function showLetter(i, k){
     <div class="big-em">${moods[k].e}</div>
     <div class="message-box"><p>${card.letters[k]}</p></div>
     <div style="text-align:center"><button class="back-btn" id="backBtn" type="button">Doosra mood chuno</button></div>`;
+  content.scrollTop = 0;
   document.getElementById('backBtn').addEventListener('click', () => showMoods(i));
   if(!opened.includes(i)){
     opened.push(i);
