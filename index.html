@@ -447,6 +447,18 @@
   .lock-msg{ color:#a13f3f; font-size:13px; min-height:18px; margin:0 0 10px; }
   .shake{ animation: shake .4s ease; }
   @keyframes shake{ 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)} }
+
+  /* ---- photo / video inside letter (need a smile jar) ---- */
+  .letter-media{ margin: 0 0 16px; text-align:center; }
+  .letter-media img, .letter-media video{
+    max-width:100%; max-height:260px; border-radius:6px;
+    border:6px solid #fff9ec; box-shadow:0 4px 10px rgba(60,40,15,.3);
+    transform:rotate(-1deg);
+  }
+  .letter-media .media-missing{
+    font-size:13px; color:#8a7a5a; padding:14px;
+    border:1px dashed var(--paper-shadow); border-radius:6px;
+  }
 </style>
 </head>
 <body>
@@ -587,6 +599,15 @@ Muskurao, mujhe pata hai tum kar sakte ho.`,
 Phir bhi, haste raho, chamakte raho, aur apni khushi mujh se zaroor share karna!`
 ];
 
+// ---- Jar 3 media: photo ya video (letter ke text ke upar dikhegi) ----
+// Order wohi: [0] Low, [1] Moderate, [2] Extreme
+// type: "img" ya "video" | src: file ka naam (HTML file ke same folder mein rakho)
+const needSmileMedia = [
+  { type: "img",   src: "smile-low.jpg" },       // Low
+  { type: "img",   src: "smile-moderate.jpg" },  // Moderate
+  { type: "video", src: "smile-extreme.mp4" }    // Extreme
+];
+
 // ---- Jar 4: Open on a bad day ----
 const badDay = [
   // Low
@@ -655,7 +676,7 @@ Aaj to celebration banta hai. Jahan bhi ho, mera pyaar aur hazaaron mubarakbaad 
 const cards = [
   { title: "Open when you miss me",         letters: missMe },      // 1
   { title: "Open when you’re sad",          letters: sad },         // 2
-  { title: "Open when you need a smile",    letters: needSmile },   // 3
+  { title: "Open when you need a smile",    letters: needSmile, media: needSmileMedia },   // 3
   { title: "Open on a bad day",             letters: badDay },      // 4
   { title: "Open when you’re angry at me",  letters: angryAtMe },   // 5
   { title: "Open when you succeed",         letters: succeed }      // 6
@@ -708,10 +729,19 @@ function showMoods(i){
 function showLetter(i, k){
   const card = cards[i];
   const content = document.getElementById('letterContent');
+  let mediaHTML = '';
+  if(card.media && card.media[k]){
+    const m = card.media[k];
+    mediaHTML = '<div class="letter-media">' + (m.type === 'video'
+      ? `<video src="${m.src}" controls playsinline preload="metadata"></video>`
+      : `<img src="${m.src}" alt="" onerror="this.outerHTML='<div class=media-missing>Photo yahan aayegi</div>'">`)
+      + '</div>';
+  }
   content.innerHTML = `
     <div class="wax-seal">&hearts;</div>
     <h2>${card.title}</h2>
     <div class="big-em">${moods[k].e}</div>
+    ${mediaHTML}
     <div class="message-box"><p>${card.letters[k]}</p></div>
     <div style="text-align:center"><button class="back-btn" id="backBtn" type="button">Doosra mood chuno</button></div>`;
   content.scrollTop = 0;
